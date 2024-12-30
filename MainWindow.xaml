@@ -10,25 +10,57 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <!--MenuBar-->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5 5 5 0">
-            <Button Height="30" Padding="7 0 7 0"
-                    FontSize="20" FontFamily="Segoe Fluent Icons" Content="&#xe700;"/>
-            <TextBlock FontSize="20" Margin="5 0 0 0" Text="Standard"/>
-        </StackPanel>
+        <Grid Margin="5 15 5 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button Height="30" Padding="7 0 7 0"
+                    FontSize="15" FontFamily="Segoe Fluent Icons" Content="&#xe700;"/>
+                <TextBlock FontSize="20" Margin="5 0 0 0" Text="Standard"/>
+                <Button FontFamily="Segoe Fluent Icons" Content="&#xe8a7;"
+                        FontSize="15" Padding="7 0 7 0"
+                        Margin="5 0 0 0"/>
+            </StackPanel>
+
+            <Button Grid.Column="1" HorizontalAlignment="Right"
+                    FontFamily="Segoe Fluent Icons"
+                    Content="&#xe81c;" FontSize="20" Padding="5"/>
+        </Grid>
 
         <!--Result-->
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="1" Margin="5 10 10 0">
             <TextBlock></TextBlock>
             <TextBlock Text="{Binding Result}"
-                       FontSize="50" HorizontalAlignment="Right"
-                       Padding="0 0 10 0"/>
+                       FontSize="50" HorizontalAlignment="Right"/>
         </StackPanel>
 
-        <Grid Grid.Row="2" Margin="3">
+        <Grid Grid.Row="2" Height="30" Margin="3 10 3 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="MC"/>
+            <Button Grid.Column="1" Content="MR"/>
+            <Button Grid.Column="2" Content="M+"/>
+            <Button Grid.Column="3" Content="M-"/>
+            <Button Grid.Column="4" Content="MS"/>
+            <Button Grid.Column="5" Content="M&#x2335;"/>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="3">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
