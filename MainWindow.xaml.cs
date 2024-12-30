@@ -19,6 +19,9 @@ namespace Calculator
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
         }
+
+        public int Result { get; set; } = 0;
     }
 }
