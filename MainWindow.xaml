@@ -39,7 +39,7 @@
         <StackPanel Grid.Row="1" Margin="5 10 10 0">
             <TextBlock Text="{Binding ExpressionBar}"
                        FontSize="15" HorizontalAlignment="Right"/>
-            <TextBlock Text="{Binding Result}"
+            <TextBlock Text="{Binding ResultBar}"
                        FontSize="45" HorizontalAlignment="Right"/>
         </StackPanel>
 
