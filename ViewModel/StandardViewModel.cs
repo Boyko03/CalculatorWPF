@@ -62,6 +62,11 @@ namespace Calculator.ViewModel
 
             if (_shouldResetInput)
             {
+                if (_operation == EOperation.None)
+                {
+                    ExpressionBar = "";
+                    _prevOperation = EOperation.None;
+                }
                 ResultBar = "";
                 _shouldResetInput = false;
                 _isOperand2Set = false;
@@ -85,39 +90,71 @@ namespace Calculator.ViewModel
             _isOperand2Set = false;
             _prevOperation = _operation;
             _operation = (EOperation)parameter;
-            _operand1 = CalculateLastOperation();
 
-            if ((int)_operand1 == _operand1)
+            try
             {
-                _operand1 = (int)_operand1;
-            }
+                _operand1 = CalculateLastOperation();
 
-            ResultBar = _operand1.ToString(CultureInfo.CurrentCulture);
-            ExpressionBar = ResultBar + "".ToString(_operation);
+                if ((int)_operand1 == _operand1)
+                {
+                    _operand1 = (int)_operand1;
+                }
+
+                ResultBar = _operand1.ToString(CultureInfo.CurrentCulture);
+                ExpressionBar = ResultBar + "".ToString(_operation);
+            }
+            catch (DivideByZeroException e)
+            {
+                _operand1 = _operand2 = 0;
+                _shouldResetInput = true;
+                _isOperand2Set = false;
+                _prevOperation = _operation = EOperation.None;
+
+                ResultBar = "Result is undefined";
+                ExpressionBar = "";
+            }
         }
 
         private void Calculate(object? parameter)
         {
             var prevOp1 = _operand1;
 
-            _shouldResetInput = true;
-            _prevOperation = _operation;
-            _operand1 = CalculateLastOperation();
-
-            if ((int)_operand1 == _operand1)
+            if (!_shouldResetInput)
             {
-                _operand1 = (int)_operand1;
+                _shouldResetInput = true;
+                _prevOperation = _operation;
+                _operation = EOperation.None;
             }
 
-            ResultBar = _operand1.ToString(CultureInfo.CurrentCulture);
+            try
+            {
+                _operand1 = CalculateLastOperation();
 
-            if (_prevOperation == EOperation.None)
-            {
-                ExpressionBar = ResultBar + "=";
+                if ((int)_operand1 == _operand1)
+                {
+                    _operand1 = (int)_operand1;
+                }
+
+                ResultBar = _operand1.ToString(CultureInfo.CurrentCulture);
+
+                if (_prevOperation == EOperation.None)
+                {
+                    ExpressionBar = ResultBar + "=";
+                }
+                else
+                {
+                    ExpressionBar = prevOp1 + "".ToString(_prevOperation) + _operand2 + "=";
+                }
             }
-            else
+            catch (DivideByZeroException e)
             {
-                ExpressionBar = prevOp1 + "".ToString(_prevOperation) + _operand2 + "=";
+                _operand1 = _operand2 = 0;
+                _shouldResetInput = true;
+                _isOperand2Set = false;
+                _prevOperation = _operation = EOperation.None;
+
+                ResultBar = "Result is undefined";
+                ExpressionBar = "";
             }
         }
 

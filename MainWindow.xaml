@@ -40,8 +40,10 @@
         <StackPanel Grid.Row="1" Margin="5 10 10 0">
             <TextBlock Text="{Binding ExpressionBar}"
                        FontSize="15" HorizontalAlignment="Right"/>
-            <TextBlock Text="{Binding ResultBar}"
-                       FontSize="45" HorizontalAlignment="Right"/>
+            <Viewbox StretchDirection="DownOnly" HorizontalAlignment="Right">
+                <TextBlock Text="{Binding ResultBar}" 
+                           FontSize="45" HorizontalAlignment="Right"/>
+            </Viewbox>
         </StackPanel>
 
         <Grid Grid.Row="2" Height="30" Margin="3 10 3 0">
