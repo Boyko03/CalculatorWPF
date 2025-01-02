@@ -64,6 +64,7 @@ namespace Calculator.ViewModel
             {
                 ResultBar = "";
                 _shouldResetInput = false;
+                _isOperand2Set = false;
             }
 
             ResultBar += parameter;
@@ -81,6 +82,7 @@ namespace Calculator.ViewModel
             }
 
             _shouldResetInput = true;
+            _isOperand2Set = false;
             _prevOperation = _operation;
             _operation = (EOperation)parameter;
             _operand1 = CalculateLastOperation();
@@ -96,11 +98,36 @@ namespace Calculator.ViewModel
 
         private void Calculate(object? parameter)
         {
+            var prevOp1 = _operand1;
+
+            _shouldResetInput = true;
+            _prevOperation = _operation;
+            _operand1 = CalculateLastOperation();
+
+            if ((int)_operand1 == _operand1)
+            {
+                _operand1 = (int)_operand1;
+            }
+
+            ResultBar = _operand1.ToString(CultureInfo.CurrentCulture);
+
+            if (_prevOperation == EOperation.None)
+            {
+                ExpressionBar = ResultBar + "=";
+            }
+            else
+            {
+                ExpressionBar = prevOp1 + "".ToString(_prevOperation) + _operand2 + "=";
+            }
         }
 
         private decimal CalculateLastOperation()
         {
-            _operand2 = ResultBar.ToDecimal();
+            if (!_isOperand2Set)
+            {
+                _operand2 = ResultBar.ToDecimal();
+                _isOperand2Set = true;
+            }
 
             return _prevOperation switch
             {
