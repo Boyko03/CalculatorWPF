@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Calculator.Command;
 
 namespace Calculator.ViewModel
@@ -37,18 +32,12 @@ namespace Calculator.ViewModel
         public StandardViewModel()
         {
             NumberCommand = new DelegateCommand(Number);
-            AddCommand = new DelegateCommand(Add);
-            SubtractCommand = new DelegateCommand(Subtract);
-            MultiplyCommand = new DelegateCommand(Multiply);
-            DivideCommand = new DelegateCommand(Divide);
+            OperationCommand = new DelegateCommand(Operation);
             CalculateCommand = new DelegateCommand(Calculate);
         }
 
         public DelegateCommand NumberCommand { get; }
-        public DelegateCommand AddCommand { get; }
-        public DelegateCommand SubtractCommand { get; }
-        public DelegateCommand MultiplyCommand { get; }
-        public DelegateCommand DivideCommand { get; }
+        public DelegateCommand OperationCommand { get; }
         public DelegateCommand CalculateCommand { get; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -61,6 +50,7 @@ namespace Calculator.ViewModel
         private decimal _operand1;
         private decimal _operand2;
         private EOperation _operation = EOperation.None;
+        private EOperation _prevOperation = EOperation.None;
         private bool _isOperand2Set;
         private bool _shouldResetInput = true;
         private string _expressionBar;
@@ -79,33 +69,43 @@ namespace Calculator.ViewModel
             ResultBar += parameter;
         }
 
-        private void Add(object? parameter)
+        private void Operation(object? parameter)
         {
-            if (_shouldResetInput) { return; }
+            ArgumentNullException.ThrowIfNull(parameter);
+
+            if (_shouldResetInput)
+            {
+                _operation = (EOperation)parameter;
+                ExpressionBar = ResultBar + "".ToString(_operation);
+                return;
+            }
 
             _shouldResetInput = true;
-            _operation = EOperation.Add;
-
-            _operand1 += ResultBar.ToDecimal();
+            _prevOperation = _operation;
+            _operation = (EOperation)parameter;
+            _operand1 = CalculateLastOperation();
 
             ResultBar = _operand1.ToString(CultureInfo.CurrentCulture);
-            ExpressionBar = ResultBar + "+";
-        }
-
-        private void Subtract(object? parameter)
-        {
-        }
-
-        private void Multiply(object? parameter)
-        {
-        }
-
-        private void Divide(object? parameter)
-        {
+            ExpressionBar = ResultBar + "".ToString(_operation);
         }
 
         private void Calculate(object? parameter)
         {
+        }
+
+        private decimal CalculateLastOperation()
+        {
+            _operand2 = ResultBar.ToDecimal();
+
+            return _prevOperation switch
+            {
+                EOperation.None => _operand2,
+                EOperation.Add => _operand1 + _operand2,
+                EOperation.Subtract => _operand1 - _operand2,
+                EOperation.Multiply => _operand1 * _operand2,
+                EOperation.Divide => _operand1 / _operand2,
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
     }
 
