@@ -85,6 +85,11 @@ namespace Calculator.ViewModel
             _operation = (EOperation)parameter;
             _operand1 = CalculateLastOperation();
 
+            if ((int)_operand1 == _operand1)
+            {
+                _operand1 = (int)_operand1;
+            }
+
             ResultBar = _operand1.ToString(CultureInfo.CurrentCulture);
             ExpressionBar = ResultBar + "".ToString(_operation);
         }
