@@ -25,6 +25,18 @@ namespace Calculator.ViewModel
             {
                 if (value == _resultBar) return;
                 _resultBar = value;
+
+                var tmp = _resultBar.ToDecimal();
+                if ((int)tmp == tmp)
+                {
+                    tmp = (int)tmp;
+                    _resultBar = tmp.ToString("N0", CultureInfo.CurrentCulture);
+                }
+                else
+                {
+                    _resultBar = tmp.ToString("#,##0.################", CultureInfo.CurrentCulture);
+                }
+
                 RaisePropertyChanged();
             }
         }
@@ -103,7 +115,7 @@ namespace Calculator.ViewModel
                 ResultBar = _operand1.ToString(CultureInfo.CurrentCulture);
                 ExpressionBar = ResultBar + "".ToString(_operation);
             }
-            catch (DivideByZeroException e)
+            catch (DivideByZeroException)
             {
                 _operand1 = _operand2 = 0;
                 _shouldResetInput = true;
@@ -137,6 +149,7 @@ namespace Calculator.ViewModel
 
                 ResultBar = _operand1.ToString(CultureInfo.CurrentCulture);
 
+
                 if (_prevOperation == EOperation.None)
                 {
                     ExpressionBar = ResultBar + "=";
@@ -146,7 +159,7 @@ namespace Calculator.ViewModel
                     ExpressionBar = prevOp1 + "".ToString(_prevOperation) + _operand2 + "=";
                 }
             }
-            catch (DivideByZeroException e)
+            catch (DivideByZeroException)
             {
                 _operand1 = _operand2 = 0;
                 _shouldResetInput = true;
@@ -212,6 +225,8 @@ namespace Calculator.ViewModel
 
         public static decimal ToDecimal(this string expression)
         {
+            expression = expression.Replace(",", "");
+
             if (decimal.TryParse(expression, out var result))
             {
                 return result;
