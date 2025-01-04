@@ -229,6 +229,8 @@ namespace Calculator.ViewModel
         {
             ResultBar.ToDecimal(out var d);
             ResultBar = (-d).ToString(CultureInfo.CurrentCulture);
+
+            _isOperand2Set = false;
         }
 
         private void OneOver(object? parameter)
@@ -250,17 +252,24 @@ namespace Calculator.ViewModel
         {
             _isOperand2Set = false;
             _shouldResetInput = true;
-            _operation = EOperation.None;
+            _prevOperation = _operation = EOperation.None;
 
             ExpressionBar = "";
             ResultBar = "0";
+
+            _operand1 = 0;
         }
 
         private void ClearE(object? parameter)
         {
             if (_operation == EOperation.None)
             {
-                Clear(parameter);
+                _shouldResetInput = true;
+
+                //ExpressionBar = "";
+                ResultBar = "0";
+
+                _operand1 = 0;
             }
             else
             {
