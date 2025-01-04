@@ -122,6 +122,11 @@ namespace Calculator.ViewModel
 
             if (_shouldResetInput)
             {
+                if (_operation == EOperation.None)
+                {
+                    ExpressionBar = "";
+                    _prevOperation = EOperation.None;
+                }
                 ResultBar = "0";
                 _shouldResetInput = false;
                 _isOperand2Set = false;
@@ -137,6 +142,7 @@ namespace Calculator.ViewModel
             if (_shouldResetInput)
             {
                 _operation = (EOperation)parameter;
+                ResultBar = _operand1.ToString(CultureInfo.CurrentCulture);
                 ExpressionBar = ResultBar + "".ToString(_operation);
                 return;
             }
@@ -177,11 +183,16 @@ namespace Calculator.ViewModel
             if (!_shouldResetInput)
             {
                 _shouldResetInput = true;
+            }
+
+            if (_operation != EOperation.None)
+            {
                 _prevOperation = _operation;
                 _operation = EOperation.None;
             }
 
             try
+
             {
                 _operand1 = CalculateLastOperation();
 
@@ -237,12 +248,27 @@ namespace Calculator.ViewModel
 
         private void Clear(object? parameter)
         {
-            throw new NotImplementedException();
+            _isOperand2Set = false;
+            _shouldResetInput = true;
+            _operation = EOperation.None;
+
+            ExpressionBar = "";
+            ResultBar = "0";
         }
 
         private void ClearE(object? parameter)
         {
-            throw new NotImplementedException();
+            if (_operation == EOperation.None)
+            {
+                Clear(parameter);
+            }
+            else
+            {
+                _isOperand2Set = false;
+                _shouldResetInput = true;
+
+                ResultBar = "0";
+            }
         }
 
         private void Backspace(object? parameter)

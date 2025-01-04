@@ -88,8 +88,10 @@
 
             <Button Style="{StaticResource BtnIconStyle}"
                     Content="&#xe94c;"/>
-            <Button Grid.Column="1">CE</Button>
-            <Button Grid.Column="2">C</Button>
+            <Button Grid.Column="1" Content="CE"
+                    Command="{Binding ClearECommand}"/>
+            <Button Grid.Column="2" Content="C"
+                    Command="{Binding ClearCommand}"/>
             <Button Grid.Column="3"
                     Style="{StaticResource BtnIconStyle}"
                     Content="&#xe94f;"/>
