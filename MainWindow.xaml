@@ -137,7 +137,7 @@
 
             <Button Grid.Row="5" Grid.Column="0"
                     Style="{StaticResource BtnIconStyle}"
-                    Content="&#xe94d;"/>
+                    Content="&#xe94d;" Command="{Binding NegateCommand}"/>
             <Button Grid.Row="5" Grid.Column="1" Content="0"
                     Command="{Binding NumberCommand}" CommandParameter="0"/>
             <Button Grid.Row="5" Grid.Column="2" Content="."

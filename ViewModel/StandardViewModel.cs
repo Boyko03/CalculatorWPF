@@ -216,7 +216,8 @@ namespace Calculator.ViewModel
 
         private void Negate(object? parameter)
         {
-            throw new NotImplementedException();
+            ResultBar.ToDecimal(out var d);
+            ResultBar = (-d).ToString(CultureInfo.CurrentCulture);
         }
 
         private void OneOver(object? parameter)
