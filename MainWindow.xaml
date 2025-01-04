@@ -80,12 +80,6 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Grid.Resources>
-                <Style TargetType="Button" x:Key="BtnIconStyle">
-                    <Setter Property="FontFamily" Value="Segoe Fluent Icons"/>
-                </Style>
-            </Grid.Resources>
-
             <Button Style="{StaticResource BtnIconStyle}"
                     Content="&#xe94c;"/>
             <Button Grid.Column="1" Content="CE"
