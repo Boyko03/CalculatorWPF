@@ -26,15 +26,23 @@ namespace Calculator.ViewModel
                 if (value == _resultBar) return;
                 _resultBar = value;
 
-                var tmp = _resultBar.ToDecimal();
-                if ((int)tmp == tmp)
+                if (_resultBar.EndsWith('.'))
                 {
-                    tmp = (int)tmp;
-                    _resultBar = tmp.ToString("N0", CultureInfo.CurrentCulture);
+                    RaisePropertyChanged();
+                    return;
                 }
-                else
+
+                if (_resultBar.ToDecimal(out var tmp))
                 {
-                    _resultBar = tmp.ToString("#,##0.################", CultureInfo.CurrentCulture);
+                    if ((int)tmp == tmp)
+                    {
+                        tmp = (int)tmp;
+                        _resultBar = tmp.ToString("N0", CultureInfo.CurrentCulture);
+                    }
+                    else
+                    {
+                        _resultBar = tmp.ToString("#,##0.################", CultureInfo.CurrentCulture);
+                    }
                 }
 
                 RaisePropertyChanged();
@@ -44,13 +52,34 @@ namespace Calculator.ViewModel
         public StandardViewModel()
         {
             NumberCommand = new DelegateCommand(Number);
+            PointCommand = new DelegateCommand(Point);
             OperationCommand = new DelegateCommand(Operation);
             CalculateCommand = new DelegateCommand(Calculate);
+
+            NegateCommand = new DelegateCommand(Negate);
+            OneOverCommand = new DelegateCommand(OneOver);
+            SquareCommand = new DelegateCommand(Square);
+            SquareRootCommand = new DelegateCommand(SquareRoot);
+
+            ClearCommand = new DelegateCommand(Clear);
+            ClearECommand = new DelegateCommand(ClearE);
+            BackspaceCommand = new DelegateCommand(Backspace);
         }
 
         public DelegateCommand NumberCommand { get; }
+        public DelegateCommand PointCommand { get; }
         public DelegateCommand OperationCommand { get; }
         public DelegateCommand CalculateCommand { get; }
+
+        public DelegateCommand NegateCommand { get; }
+        public DelegateCommand OneOverCommand { get; }
+        public DelegateCommand SquareCommand { get; }
+        public DelegateCommand SquareRootCommand { get; }
+
+        public DelegateCommand ClearCommand { get; }
+        public DelegateCommand ClearECommand { get; }
+        public DelegateCommand BackspaceCommand { get; }
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -65,7 +94,7 @@ namespace Calculator.ViewModel
         private EOperation _prevOperation = EOperation.None;
         private bool _isOperand2Set;
         private bool _shouldResetInput = true;
-        private string _expressionBar;
+        private string _expressionBar = "";
         private string _resultBar = "0";
 
         private void Number(object? parameter)
@@ -85,6 +114,20 @@ namespace Calculator.ViewModel
             }
 
             ResultBar += parameter;
+        }
+
+        private void Point(object? parameter)
+        {
+            if (!_shouldResetInput && ResultBar.Contains('.')) return;
+
+            if (_shouldResetInput)
+            {
+                ResultBar = "0";
+                _shouldResetInput = false;
+                _isOperand2Set = false;
+            }
+
+            ResultBar += ".";
         }
 
         private void Operation(object? parameter)
@@ -171,11 +214,46 @@ namespace Calculator.ViewModel
             }
         }
 
+        private void Negate(object? parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OneOver(object? parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Square(object? parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SquareRoot(object? parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Clear(object? parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ClearE(object? parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Backspace(object? parameter)
+        {
+            throw new NotImplementedException();
+        }
+
         private decimal CalculateLastOperation()
         {
             if (!_isOperand2Set)
             {
-                _operand2 = ResultBar.ToDecimal();
+                ResultBar.ToDecimal(out _operand2);
                 _isOperand2Set = true;
             }
 
@@ -223,16 +301,24 @@ namespace Calculator.ViewModel
             return "";
         }
 
-        public static decimal ToDecimal(this string expression)
+        public static bool ToDecimal(this string expression, out decimal d)
         {
             expression = expression.Replace(",", "");
 
             if (decimal.TryParse(expression, out var result))
             {
-                return result;
+                d = result;
+                return true;
             }
 
-            return int.TryParse(expression, out var iResult) ? iResult : 0;
+            if (int.TryParse(expression, out var iResult))
+            {
+                d = iResult;
+                return true;
+            }
+
+            d = 0;
+            return false;
         }
     }
 }
