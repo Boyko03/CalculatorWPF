@@ -9,7 +9,7 @@ namespace Calculator
         {
             base.OnStartup(e);
 
-            var mainWindow = new MainWindow(new StandardViewModel());
+            var mainWindow = new MainWindow(new MainViewModel(new StandardViewModel()));
             mainWindow.Show();
         }
     }

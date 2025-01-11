@@ -5,7 +5,7 @@ using Calculator.Command;
 
 namespace Calculator.ViewModel
 {
-    public class StandardViewModel : INotifyPropertyChanged
+    public class StandardViewModel : ViewModelBase
     {
         public string ExpressionBar
         {
@@ -79,14 +79,6 @@ namespace Calculator.ViewModel
         public DelegateCommand ClearCommand { get; }
         public DelegateCommand ClearECommand { get; }
         public DelegateCommand BackspaceCommand { get; }
-
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         private decimal _operand1;
         private decimal _operand2;

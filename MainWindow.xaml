@@ -6,22 +6,22 @@
         xmlns:local="clr-namespace:Calculator"
         xmlns:viewModel="clr-namespace:Calculator.ViewModel"
         xmlns:controls="clr-namespace:Calculator.Controls"
+        xmlns:view="clr-namespace:Calculator.View"
         mc:Ignorable="d"
         Title="Calculator" Height="540" Width="335">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:StandardViewModel}">
+            <view:StandardView/>
+        </DataTemplate>
+    </Window.Resources>
     <Grid Background="#232323">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <controls:MenuBar Margin="5 15 5 0"/>
 
-        <controls:ResultBar Grid.Row="1" Margin="5 10 10 0" Foreground="PaleGreen"/>
-
-        <controls:MemoryBar Grid.Row="2" Height="30" Margin="3 10 3 0"/>
-
-        <controls:StandardInputBar Grid.Row="3" Margin="3"/>
+        <ContentControl Grid.Row="1" Content="{Binding SelectedViewModel}"/>
     </Grid>
 </Window>
