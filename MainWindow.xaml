@@ -7,7 +7,7 @@
         xmlns:viewModel="clr-namespace:Calculator.ViewModel"
         mc:Ignorable="d"
         Title="Calculator" Height="540" Width="335">
-    <Grid>
+    <Grid Background="#232323">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -99,10 +99,13 @@
                     CommandParameter="{x:Static viewModel:EOperation.Divide}"/>
 
             <Button Grid.Row="2" Grid.Column="0" Content="7"
+                    Style="{StaticResource BtnNumberStyle}"
                     Command="{Binding NumberCommand}" CommandParameter="7"/>
             <Button Grid.Row="2" Grid.Column="1" Content="8"
+                    Style="{StaticResource BtnNumberStyle}"
                     Command="{Binding NumberCommand}" CommandParameter="8"/>
             <Button Grid.Row="2" Grid.Column="2" Content="9"
+                    Style="{StaticResource BtnNumberStyle}"
                     Command="{Binding NumberCommand}" CommandParameter="9"/>
             <Button Grid.Row="2" Grid.Column="3"
                     Style="{StaticResource BtnIconStyle}"
@@ -110,10 +113,13 @@
                     CommandParameter="{x:Static viewModel:EOperation.Multiply}"/>
 
             <Button Grid.Row="3" Grid.Column="0" Content="4"
+                    Style="{StaticResource BtnNumberStyle}"
                     Command="{Binding NumberCommand}" CommandParameter="4"/>
             <Button Grid.Row="3" Grid.Column="1" Content="5"
+                    Style="{StaticResource BtnNumberStyle}"
                     Command="{Binding NumberCommand}" CommandParameter="5"/>
             <Button Grid.Row="3" Grid.Column="2" Content="6"
+                    Style="{StaticResource BtnNumberStyle}"
                     Command="{Binding NumberCommand}" CommandParameter="6"/>
             <Button Grid.Row="3" Grid.Column="3"
                     Style="{StaticResource BtnIconStyle}"
@@ -121,10 +127,13 @@
                     CommandParameter="{x:Static viewModel:EOperation.Subtract}"/>
 
             <Button Grid.Row="4" Grid.Column="0" Content="1"
+                    Style="{StaticResource BtnNumberStyle}"
                     Command="{Binding NumberCommand}" CommandParameter="1"/>
             <Button Grid.Row="4" Grid.Column="1" Content="2"
+                    Style="{StaticResource BtnNumberStyle}"
                     Command="{Binding NumberCommand}" CommandParameter="2"/>
             <Button Grid.Row="4" Grid.Column="2" Content="3"
+                    Style="{StaticResource BtnNumberStyle}"
                     Command="{Binding NumberCommand}" CommandParameter="3"/>
             <Button Grid.Row="4" Grid.Column="3"
                     Style="{StaticResource BtnIconStyle}"
@@ -132,11 +141,13 @@
                     CommandParameter="{x:Static viewModel:EOperation.Add}"/>
 
             <Button Grid.Row="5" Grid.Column="0"
-                    Style="{StaticResource BtnIconStyle}"
+                    Style="{StaticResource BtnIconStyle2}"
                     Content="&#xe94d;" Command="{Binding NegateCommand}"/>
             <Button Grid.Row="5" Grid.Column="1" Content="0"
+                    Style="{StaticResource BtnNumberStyle}"
                     Command="{Binding NumberCommand}" CommandParameter="0"/>
             <Button Grid.Row="5" Grid.Column="2" Content="."
+                    Style="{StaticResource BtnNumberStyle}"
                     Command="{Binding PointCommand}"/>
             <Button Grid.Row="5" Grid.Column="3"
                     Style="{StaticResource BtnIconStyle}"
