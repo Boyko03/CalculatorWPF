@@ -6,6 +6,13 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <StartupObject>Calculator.App</StartupObject>
+    <ApplicationIcon>Images\calculator_icon.ico</ApplicationIcon>
+    <SignAssembly>False</SignAssembly>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Images\calculator_icon.ico" />
+  </ItemGroup>
 
 </Project>
