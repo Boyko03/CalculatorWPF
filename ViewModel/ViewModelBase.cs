@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace Calculator.ViewModel
 {
@@ -13,5 +14,8 @@ namespace Calculator.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public virtual void OnKeyDown(object sender, KeyEventArgs e) {}
+
     }
 }

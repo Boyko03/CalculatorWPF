@@ -8,7 +8,8 @@
         xmlns:controls="clr-namespace:Calculator.Controls"
         xmlns:view="clr-namespace:Calculator.View"
         mc:Ignorable="d"
-        Title="Calculator" Height="540" Width="335">
+        Title="Calculator" Height="540" Width="335"
+        KeyDown="MainWindow_OnKeyDown">
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModel:StandardViewModel}">
             <view:StandardView/>
