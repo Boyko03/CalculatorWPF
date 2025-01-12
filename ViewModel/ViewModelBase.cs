@@ -3,8 +3,10 @@ using System.Runtime.CompilerServices;
 
 namespace Calculator.ViewModel
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
+        public virtual string GetName => "";
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void RaisePropertyChanged([CallerMemberName] string? propertyName = null)

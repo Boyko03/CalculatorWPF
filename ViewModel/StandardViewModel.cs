@@ -7,6 +7,8 @@ namespace Calculator.ViewModel
 {
     public class StandardViewModel : ViewModelBase
     {
+        public override string GetName => "Standard";
+
         public string ExpressionBar
         {
             get => _expressionBar;
