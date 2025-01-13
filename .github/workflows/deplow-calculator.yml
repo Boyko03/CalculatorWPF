@@ -1,0 +1,46 @@
+name: "Deploy Calculator"
+
+on:
+  push:
+    tags:
+      - "calculator/v*"
+
+env:
+  PROJECT_PATH: Calculator.csproj
+   
+jobs:
+  deploy:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+  
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore the application
+        run: dotnet restore ${{ env.PROJECT_PATH }}
+
+      - name: Build the application
+        run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
+
+      - name: Publish the application
+        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x64 -p:PublishSingleFile=true --no-build
+
+      - name: Create release
+        uses: actions/create-release@v1
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+
+      - name: Release
+        uses: csexton/release-asset-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: bin/Release/net9.0-windows/win-x64/publish/*.exe
+          release-url: ${{ steps.create_release.outputs.upload_url }}
