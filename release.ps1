@@ -6,7 +6,7 @@ param (
 )
 
 $appName = "Calculator" # 👈 Replace with your application project name.
-$projDir = "/" # 👈 Replace with your project directory (where .csproj resides).
+$projDir = "./" # 👈 Replace with your project directory (where .csproj resides).
 
 Set-StrictMode -version 2.0
 $ErrorActionPreference = "Stop"
